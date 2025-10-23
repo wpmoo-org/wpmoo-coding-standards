@@ -1,9 +1,73 @@
 <?xml version="1.0"?>
 <ruleset name="wpmoo-coding-standards">
-    <description>Local PHPCS configuration for developing the WPMoo standard.</description>
+<description>Common PHPCS configuration for WPMoo repositories, extending the wpmoo/wpmoo-coding-standards package.</description>
 
-    <rule ref="WPMoo" />
+    <!-- 1. Base Standard -->
 
-    <file>WPMoo</file>
-    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <rule ref="WPMoo">
+        <!-- Allow PSR-4 style file/class/function names. -->
+        <exclude name="WordPress.Files.FileName"/>
+        <exclude name="WordPress.NamingConventions.ValidFunctionName.FunctionName"/>
+        <exclude name="WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid"/>
+        <exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid"/>
+        <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+        <exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+        <exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned"/>
+        <exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning"/>
+        <exclude name="WordPress.DateTime.RestrictedFunctions.date_date"/>
+        <exclude name="WordPress.PHP.DisallowShortTernary.Found"/>
+    </rule>
+
+    <!-- 2. Arguments & Environment -->
+
+    <ini name="error_reporting" value="E_ALL &#38; ~E_DEPRECATED"/>
+    <arg name="extensions" value="php"/>
+    <arg name="encoding" value="utf-8"/>
+    <arg name="tab-width" value="4"/>
+    <arg name="parallel" value="8"/>
+
+    <!-- 3. Excludes -->
+
+    <exclude-pattern>vendor/*</exclude-pattern>
+    <exclude-pattern>node_modules/*</exclude-pattern>
+    <exclude-pattern>build/*</exclude-pattern>
+    <exclude-pattern>tests/_output/*</exclude-pattern>
+    <exclude-pattern>tmp/*</exclude-pattern>
+    <exclude-pattern>.git/*</exclude-pattern>
+
+    <!-- 4. Shared Overrides -->
+
+    <rule ref="WordPress.NamingConventions.ValidHookName">
+        <properties>
+            <property name="additionalWordDelimiters" value="-/"/>
+        </properties>
+    </rule>
+
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="150"/>
+        </properties>
+    </rule>
+
+    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+        <exclude-pattern>*/src/*</exclude-pattern>
+        <exclude-pattern>*/config/*</exclude-pattern>
+        <exclude-pattern>*/database/*</exclude-pattern>
+        <exclude-pattern>*/Providers/*</exclude-pattern>
+    </rule>
+
+    <rule ref="WordPress.NamingConventions.ValidVariableName">
+        <exclude-pattern>*/src/*</exclude-pattern>
+    </rule>
+
+    <exclude name="WordPress.Files.FileComment"/>
+    <rule ref="Squiz.Commenting.FileComment"><severity>0</severity></rule>
+    <rule ref="Squiz.Commenting.FunctionComment"><severity>0</severity></rule>
+    <rule ref="Squiz.Commenting.InlineComment"><severity>0</severity></rule>
+
+    <rule ref="PSR12.Files.FileHeader"><severity>0</severity></rule>
+    <rule ref="WordPress.PHP.YodaConditions"><severity>0</severity></rule>
+
+    <exclude name="Generic.Arrays.DisallowLongArraySyntax"/>
 </ruleset>
