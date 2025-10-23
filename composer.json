@@ -2,6 +2,7 @@
   "name": "wpmoo/wpmoo-coding-standards",
   "description": "Shared PHPCS standard and custom sniffs for WPMoo projects.",
   "type": "phpcodesniffer-standard",
+  "version": "0.1.0",
   "license": "MIT",
   "homepage": "https://wpmoo.org",
   "authors": [
