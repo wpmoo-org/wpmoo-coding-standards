@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ruleset name="WPMoo">
+    <description>Shared PHPCS coding standards for WPMoo projects.</description>
+
+    <rule ref="WordPress-Core" />
+    <rule ref="WordPress-Docs" />
+    <rule ref="WordPress-Extra" />
+    <rule ref="PHPCompatibilityWP" />
+
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/build/*</exclude-pattern>
+
+    <config name="minimum_supported_wp_version" value="6.5" />
+    <config name="testVersion" value="7.4-" />
+
+    <rule ref="Generic.PHP.NoSilencedErrors" />
+    <rule ref="WPMoo.Formatting.NoInlineDie" />
+</ruleset>

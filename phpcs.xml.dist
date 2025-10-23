@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ruleset name="wpmoo-coding-standards">
+    <description>Local PHPCS configuration for developing the WPMoo standard.</description>
+
+    <rule ref="WPMoo" />
+
+    <file>WPMoo</file>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+</ruleset>
