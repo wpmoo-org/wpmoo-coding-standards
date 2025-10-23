@@ -3,6 +3,14 @@
   "description": "Shared PHPCS standard and custom sniffs for WPMoo projects.",
   "type": "phpcodesniffer-standard",
   "license": "MIT",
+  "homepage": "https://wpmoo.org",
+  "authors": [
+    {
+      "name": "Ahmet Cangir",
+      "email": "hello@wpmoo.org",
+      "homepage": "https://wpmoo.org/"
+    }
+  ],
   "require": {
     "squizlabs/php_codesniffer": "^3.10",
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
