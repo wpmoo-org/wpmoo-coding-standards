@@ -1,5 +1,5 @@
 {
-    "name": "wpmoo/wpmoo-coding-standards",
+    "name": "wpmoo/wpcs",
     "description": "Shared PHPCS standard and custom sniffs for WPMoo projects.",
     "type": "phpcodesniffer-standard",
     "license": "MIT",
