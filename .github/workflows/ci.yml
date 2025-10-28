@@ -18,6 +18,8 @@ jobs:
           tools: composer:v2
           coverage: none
       - name: Install dependencies
+        env:
+          COMPOSER_ROOT_VERSION: dev-main
         run: composer install --no-interaction --prefer-dist --ansi
       - name: Composer validate
         run: composer validate --no-check-lock --ansi
