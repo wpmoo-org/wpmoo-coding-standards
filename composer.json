@@ -32,5 +32,10 @@
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
+  },
+  "scripts": {
+    "hooks:install": "git config core.hooksPath .githooks && chmod +x .githooks/pre-commit",
+    "lint:php": "find . -path './vendor' -prune -o -name '*.php' -print0 | xargs -0 -n1 php -l",
+    "phpcs": "vendor/bin/phpcs -n"
   }
 }
