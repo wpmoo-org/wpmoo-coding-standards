@@ -11,7 +11,8 @@ if [ -z "${STAGED_FILES}" ]; then
 fi
 
 if command -v composer >/dev/null 2>&1 && [ -f composer.json ]; then
-  composer validate --strict --no-check-lock --ansi || exit 1
+  # Allow warnings (e.g., version field) in this repo; fail only on invalid schema
+  composer validate --no-check-lock --ansi || exit 1
 fi
 
 if [ -n "${PHP_FILES}" ]; then
@@ -22,13 +23,11 @@ if [ -n "${PHP_FILES}" ]; then
   done <<< "${PHP_FILES}"
 fi
 
-if [ -x vendor/bin/phpcs ]; then
-  echo "→ Running PHPCS (list installed standards)"
-  vendor/bin/phpcs -i >/dev/null || true
-  echo "→ Running PHPCS on repository (errors only)"
-  vendor/bin/phpcs -n || exit 1
+if [ -x vendor/bin/phpcs ] && [ -n "${PHP_FILES}" ]; then
+  echo "→ Running PHPCS on staged files (errors only)"
+  # Run only on staged PHP files to keep hooks fast and avoid vendor scanning
+  vendor/bin/phpcs -n ${PHP_FILES} || exit 1
 fi
 
 echo "✔ Pre-commit checks passed"
 exit 0
-

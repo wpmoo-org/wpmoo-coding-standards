@@ -4,7 +4,8 @@ set -euo pipefail
 echo "WPMoo Coding Standards pre-push: composer validate, PHPCS"
 
 if command -v composer >/dev/null 2>&1 && [ -f composer.json ]; then
-  composer validate --strict --no-check-lock --ansi || exit 1
+  # Allow warnings in standards repo; CI also validates non-strict here
+  composer validate --no-check-lock --ansi || exit 1
 fi
 
 if [ -x vendor/bin/phpcs ]; then
@@ -14,4 +15,3 @@ fi
 
 echo "✔ Pre-push checks passed"
 exit 0
-
