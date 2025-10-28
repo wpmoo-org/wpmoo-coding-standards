@@ -7,6 +7,7 @@ STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR | tr '\n' ' ')
 PHP_FILES=$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.php$' || true)
 
 if [ -z "${STAGED_FILES}" ]; then
+  echo "(no staged changes; skipping checks)"
   exit 0
 fi
 
