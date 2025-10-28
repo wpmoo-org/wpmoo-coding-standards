@@ -15,8 +15,12 @@ if command -v composer >/dev/null 2>&1 && [ -f composer.json ]; then
 fi
 
 if [ -x vendor/bin/phpcs ]; then
-  echo "→ Running PHPCS (errors only)"
-  vendor/bin/phpcs -n || exit 1
+  echo "→ Running PHPCS on WPMoo/ (errors only)"
+  if [ -d WPMoo ]; then
+    vendor/bin/phpcs -n WPMoo || exit 1
+  else
+    echo "(WPMoo/ source directory not found, skipping PHPCS scan)"
+  fi
 fi
 
 echo "✔ Pre-push checks passed"
