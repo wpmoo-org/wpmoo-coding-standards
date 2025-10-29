@@ -12,7 +12,7 @@ jobs:
       has_tests: ${{ steps.detect-tests.outputs.has_tests }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Detect tests config
         id: detect-tests
         run: |
