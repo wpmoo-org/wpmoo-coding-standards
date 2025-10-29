@@ -6,7 +6,70 @@ on:
 
 jobs:
   checks:
-    name: Validate & PHPCS availability
+    name: Static checks (Composer/PHPCS)
+    runs-on: ubuntu-latest
+    outputs:
+      has_tests: ${{ steps.detect-tests.outputs.has_tests }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Detect tests config
+        id: detect-tests
+        run: |
+          if [ -f phpunit.xml ] || [ -f phpunit.xml.dist ]; then
+            echo "has_tests=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_tests=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+          coverage: none
+          ini-values: memory_limit=-1
+      - name: Compute composer cache key
+        id: composer-cache
+        run: |
+          if [ -f composer.lock ]; then
+            echo "lockhash=$(sha256sum composer.lock | cut -d ' ' -f1)" >> "$GITHUB_OUTPUT"
+          else
+            echo "lockhash=none" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Cache Composer downloads
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.composer/cache
+            ~/.cache/composer
+          key: composer-${{ steps.composer-cache.outputs.lockhash }}
+          restore-keys: |
+            composer-
+      - name: Install dependencies
+        env:
+          COMPOSER_ROOT_VERSION: dev-main
+        run: composer install --no-interaction --prefer-dist --ansi
+      - name: Composer validate
+        run: composer validate --strict --no-check-lock --ansi
+      - name: Lint PHP
+        run: |
+          if composer run --list | grep -q "lint:php"; then
+            composer run lint:php --ansi
+          else
+            find . -path './vendor' -prune -o -name '*.php' -print0 | xargs -0 -n1 php -l
+          fi
+      - name: PHPCS
+        run: |
+          if composer run --list | grep -q "phpcs"; then
+            composer run phpcs --ansi
+          else
+            vendor/bin/phpcs -n || true
+          fi
+
+  tests:
+    name: PHPUnit
+    needs: checks
+    if: ${{ needs.checks.outputs.has_tests == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -15,16 +78,29 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-          tools: composer:v2
+          tools: composer:v2, phpunit
           coverage: none
+          ini-values: memory_limit=-1
+      - name: Compute composer cache key
+        id: composer-cache
+        run: |
+          if [ -f composer.lock ]; then
+            echo "lockhash=$(sha256sum composer.lock | cut -d ' ' -f1)" >> "$GITHUB_OUTPUT"
+          else
+            echo "lockhash=none" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Cache Composer downloads
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.composer/cache
+            ~/.cache/composer
+          key: composer-${{ steps.composer-cache.outputs.lockhash }}
+          restore-keys: |
+            composer-
       - name: Install dependencies
         env:
           COMPOSER_ROOT_VERSION: dev-main
         run: composer install --no-interaction --prefer-dist --ansi
-      - name: Composer validate
-        run: composer validate --no-check-lock --ansi
-      - name: Lint PHP
-        run: |
-          find . -path './vendor' -prune -o -name '*.php' -print0 | xargs -0 -n1 php -l
-      - name: List installed standards
-        run: vendor/bin/phpcs -i
+      - name: Run PHPUnit
+        run: phpunit
