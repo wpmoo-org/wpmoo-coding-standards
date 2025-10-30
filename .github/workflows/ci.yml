@@ -37,7 +37,7 @@ jobs:
             echo "lockhash=none" >> "$GITHUB_OUTPUT"
           fi
       - name: Cache Composer downloads
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.composer/cache
@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -92,7 +92,7 @@ jobs:
             echo "lockhash=none" >> "$GITHUB_OUTPUT"
           fi
       - name: Cache Composer downloads
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.composer/cache
