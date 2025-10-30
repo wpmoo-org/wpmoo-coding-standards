@@ -1,5 +1,7 @@
 # WPMoo Coding Standards
 
+[![CI](https://github.com/wpmoo-org/wpmoo-coding-standards/actions/workflows/ci.yml/badge.svg)](https://github.com/wpmoo-org/wpmoo-coding-standards/actions/workflows/ci.yml)
+
 This repository contains the shared PHP_CodeSniffer (PHPCS) ruleset and custom sniffs used across WPMoo projects.
 
 ## Installation
