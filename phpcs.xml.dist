@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <ruleset name="wpmoo-coding-standards">
-<description>Common PHPCS configuration for WPMoo repositories, extending the wpmoo/wpmoo-coding-standards package.</description>
+<description>Common PHPCS configuration for WPMoo repositories, allowing snake_case method names for consistency with WPMoo standards.</description>
 
     <!-- 1. Base Standard -->
 
@@ -16,6 +16,8 @@
         <exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning"/>
         <exclude name="WordPress.DateTime.RestrictedFunctions.date_date"/>
         <exclude name="WordPress.PHP.DisallowShortTernary.Found"/>
+        <!-- Exclude the sniff that enforces camelCase for method names -->
+        <exclude name="PSR1.Methods.CamelCapsMethodName"/>
     </rule>
 
     <!-- 2. Arguments & Environment -->

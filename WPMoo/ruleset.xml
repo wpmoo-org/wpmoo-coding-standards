@@ -1,11 +1,14 @@
 <?xml version="1.0"?>
 <ruleset name="WPMoo">
-    <description>Shared PHPCS coding standards for WPMoo projects.</description>
+    <description>Shared PHPCS coding standards for WPMoo projects, allowing snake_case method names for consistency with WPMoo standards.</description>
 
     <rule ref="WordPress-Core" />
     <rule ref="WordPress-Docs" />
     <rule ref="WordPress-Extra" />
     <rule ref="PHPCompatibilityWP" />
+
+    <!-- Exclude the sniff that enforces camelCase for method names -->
+    <exclude name="PSR1.Methods.CamelCapsMethodName"/>
 
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*/node_modules/*</exclude-pattern>
