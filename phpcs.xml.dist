@@ -1,24 +1,10 @@
 <?xml version="1.0"?>
 <ruleset name="wpmoo-coding-standards">
-<description>Common PHPCS configuration for WPMoo repositories, allowing snake_case method names for consistency with WPMoo standards.</description>
+<description>Common PHPCS configuration for WPMoo repositories.</description>
 
     <!-- 1. Base Standard -->
 
-    <rule ref="WPMoo">
-        <!-- Allow PSR-4 style file/class/function names. -->
-        <exclude name="WordPress.Files.FileName"/>
-        <exclude name="WordPress.NamingConventions.ValidFunctionName.FunctionName"/>
-        <exclude name="WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid"/>
-        <exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid"/>
-        <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
-        <exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
-        <exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned"/>
-        <exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning"/>
-        <exclude name="WordPress.DateTime.RestrictedFunctions.date_date"/>
-        <exclude name="WordPress.PHP.DisallowShortTernary.Found"/>
-        <!-- Exclude the sniff that enforces camelCase for method names -->
-        <exclude name="PSR1.Methods.CamelCapsMethodName"/>
-    </rule>
+    <rule ref="WPMoo" />
 
     <!-- 2. Arguments & Environment -->
 
@@ -39,12 +25,6 @@
 
     <!-- 4. Shared Overrides -->
 
-    <rule ref="WordPress.NamingConventions.ValidHookName">
-        <properties>
-            <property name="additionalWordDelimiters" value="-/"/>
-        </properties>
-    </rule>
-
     <rule ref="Generic.Files.LineLength">
         <properties>
             <property name="lineLimit" value="120"/>
@@ -52,24 +32,6 @@
         </properties>
     </rule>
 
-    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
-        <exclude-pattern>*/src/*</exclude-pattern>
-        <exclude-pattern>*/config/*</exclude-pattern>
-        <exclude-pattern>*/database/*</exclude-pattern>
-        <exclude-pattern>*/Providers/*</exclude-pattern>
-    </rule>
-
-    <rule ref="WordPress.NamingConventions.ValidVariableName">
-        <exclude-pattern>*/src/*</exclude-pattern>
-    </rule>
-
-    <exclude name="WordPress.Files.FileComment"/>
-    <rule ref="Squiz.Commenting.FileComment"><severity>0</severity></rule>
-    <rule ref="Squiz.Commenting.FunctionComment"><severity>0</severity></rule>
-    <rule ref="Squiz.Commenting.InlineComment"><severity>0</severity></rule>
-
-    <rule ref="PSR12.Files.FileHeader"><severity>0</severity></rule>
-    <rule ref="WordPress.PHP.YodaConditions"><severity>0</severity></rule>
-
+    <!-- Generic rules -->
     <exclude name="Generic.Arrays.DisallowLongArraySyntax"/>
 </ruleset>
