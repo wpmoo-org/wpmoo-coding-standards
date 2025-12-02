@@ -1,4 +1,16 @@
 <?php
+/**
+ * WPMoo_Sniffs_Formatting_NoInlineDieSniff.
+ *
+ * PHP version 7.4
+ *
+ * @category  PHP
+ * @package   WPMoo
+ * @author    Your Name <your.email@example.com>
+ * @copyright 2025 WPMoo
+ * @license   https://www.gnu.org/licenses/gpl-3.0 GPL v3
+ * @link      https://example.com
+ */
 
 namespace WPMoo\Sniffs\Formatting;
 
@@ -15,7 +27,7 @@ class NoInlineDieSniff implements Sniff {
 	 * @return array<int, int>
 	 */
 	public function register(): array {
-		return [ T_EXIT ];
+		return array( T_EXIT );
 	}
 
 	/**
@@ -35,7 +47,7 @@ class NoInlineDieSniff implements Sniff {
 				'Use wp_die() instead of %s().',
 				$stack_ptr,
 				'FoundDie',
-				[ $content ]
+				array( $content )
 			);
 		}
 	}
